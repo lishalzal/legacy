@@ -1,59 +1,302 @@
-# Hacker Experience Legacy
+# Hacker Experience Modern
 
-This is the source-code for Legacy, the first version of Hacker Experience I built from 2012-2014 and published on 2014. I made a promise I'd release it and here it is.
+A modern recreation of the classic Hacker Experience Legacy game, built with React, Node.js, and MySQL.
 
-Legacy reached the 1-million registered players milestone 5 years after it was released, and soon after I decided to shut it down, since I no longer could maintain it. [Context about why I decided to shut it down](https://medium.com/@renatomassaro/updates-on-hacker-experience-legacy-eb5a9e0aee33).
+## Features
 
-If you were one of these players, I hope you had a good time with Legacy! I also hope that, by releasing its code, someone else can maintain a server on which you can keep playing it.
+- **Modern Web Interface**: Beautiful React-based UI with cyberpunk theme
+- **Real-time Updates**: Socket.IO for live process updates and notifications
+- **Hardware Management**: Buy, upgrade, and manage PCs, servers, and laptops
+- **Software System**: Install, manage, and use various hacking tools
+- **Mission System**: Complete storyline and side missions for rewards
+- **Internet Simulation**: Scan, hack, and interact with NPCs and other players
+- **Financial System**: Manage money, bank accounts, and Bitcoin wallets
+- **Process Management**: Run time-based operations with progress tracking
+- **User Profiles**: Track statistics, rankings, and achievements
 
-## Disclaimer
+## Tech Stack
 
-Legacy was my first programming project. I learned to code by building Legacy. As such, its codebase is *terrible*. It has no tests, no architecture, virtually no documentation and no warranties that it will work as expected, or in a secure manner. In fact, it's more likely it will *not* work as expected. You've been warned.
+### Backend
+- **Node.js** with Express.js
+- **MySQL** database
+- **Socket.IO** for real-time communication
+- **JWT** authentication
+- **bcryptjs** for password hashing
 
-## Documentation
+### Frontend
+- **React 18** with hooks
+- **React Router** for navigation
+- **Socket.IO Client** for real-time updates
+- **React Query** for data fetching
+- **Styled Components** for styling
+- **React Toastify** for notifications
 
-The closest I have to a documentation can be found at the `info/` folder. Keep in mind it might be outdated, but it's better than nothing.
+## Prerequisites
 
-## Redactions and comments
+- Node.js (v16 or higher)
+- MySQL (v8.0 or higher)
+- npm or yarn
 
-This is the exact same code that powered Legacy, except for a few hard-coded passwords and API keys that were replaced with the `REDACTED` strings. I also removed images.
+## Installation
 
-I did a quick code-review and added some comments that might help you understand the code. I also added translations to comments in Portuguese (except for the ones I had no idea what I wrote originally). All my comments are prefixed with `2019: `.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd hacker-experience-modern
+   ```
 
-## Setup
+2. **Install dependencies**
+   ```bash
+   # Install server dependencies
+   npm install
+   
+   # Install client dependencies
+   cd client
+   npm install
+   cd ..
+   ```
 
-Legacy uses PHP 5 and MySQL, alongside some Python 2 scripts running on cron jobs. You can build the database schema from the `game.sql` file. A model of the cron file can be found at `crontab`.
+3. **Set up the database**
+   ```bash
+   # Create a MySQL database
+   mysql -u root -p
+   CREATE DATABASE hacker_experience;
+   USE hacker_experience;
+   
+   # Import the schema
+   source server/config/schema.sql;
+   ```
 
-If you have questions and/or need help setting it up or understanding its code, please open an issue. Your question may be someone else's, so do not hesitate asking it. I can't guarantee fast responses, but I'll try to help you as soon as possible.
+4. **Configure environment variables**
+   Create a `.env` file in the root directory:
+   ```env
+   # Database
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=your_password
+   DB_NAME=hacker_experience
+   
+   # JWT
+   JWT_SECRET=your_secret_key_here
+   
+   # Server
+   PORT=5000
+   CLIENT_URL=http://localhost:3000
+   ```
 
-Make sure to scan the code for the words `REDACTED` and `2019`. `REDACTED` will contain placeholders for API keys and passwords that you might want to change. `2019` may contain useful comments.
+5. **Start the development servers**
+   ```bash
+   # Start both server and client (recommended)
+   npm run dev
+   
+   # Or start them separately:
+   # Terminal 1 - Start server
+   npm run server
+   
+   # Terminal 2 - Start client
+   npm run client
+   ```
+
+6. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
+
+## Game Features
+
+### Authentication
+- User registration and login
+- JWT-based authentication
+- Password hashing with bcrypt
+
+### Hardware System
+- **PCs**: Basic computers with upgradeable components
+- **Servers**: High-performance machines for advanced operations
+- **Laptops**: Portable computers with balanced specs
+- **Components**: CPU, RAM, HDD, Internet, Firewall, Antivirus
+
+### Software System
+- **Hacking Tools**: Basic Hacker, Port Scanner, NMAP
+- **File Operations**: Download, Upload, Delete, Hide, Seek
+- **System Tools**: Antivirus, Log Viewer, Disk Formatter
+- **Network Tools**: DDoS, Web Server, IP Reset
+- **Organization**: Folders and text files
+
+### Mission System
+- **Storyline Missions**: Progressive narrative missions
+- **Side Missions**: Optional objectives for rewards
+- **Daily Missions**: Regular challenges
+- **Rewards**: Money, experience, and software
+
+### Internet Simulation
+- **NPCs**: Computer-controlled targets
+- **Players**: Other human players
+- **Scanning**: Port scanning and system analysis
+- **Hacking**: Breach security and steal data
+
+### Financial System
+- **Money**: In-game currency
+- **Bank Accounts**: Secure storage with passwords
+- **Bitcoin**: Cryptocurrency wallets
+- **Transfers**: Move funds between accounts
+
+### Process Management
+- **Time-based Operations**: Real-time progress tracking
+- **Hardware Dependencies**: Performance affects speed
+- **Multiple Processes**: Run several operations simultaneously
+- **Real-time Updates**: Live progress via Socket.IO
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user
+
+### Hardware
+- `GET /api/hardware` - Get user's hardware
+- `POST /api/hardware/buy` - Buy new hardware
+- `PUT /api/hardware/:id/upgrade` - Upgrade hardware
+- `PUT /api/hardware/:id/activate` - Set active hardware
+
+### Software
+- `GET /api/software` - Get user's software
+- `GET /api/software/store` - Get available software
+- `POST /api/software/buy` - Buy software
+- `PUT /api/software/:id/install` - Install/uninstall software
+
+### Missions
+- `GET /api/missions/available` - Get available missions
+- `GET /api/missions/current` - Get current mission
+- `POST /api/missions/:id/start` - Start mission
+- `POST /api/missions/:id/complete` - Complete mission
+
+### Internet
+- `GET /api/internet/connections` - Get internet connections
+- `POST /api/internet/scan` - Scan target
+- `POST /api/internet/portscan` - Port scan target
+
+### Finances
+- `GET /api/finances` - Get user finances
+- `GET /api/finances/bank` - Get bank accounts
+- `POST /api/finances/bank` - Create bank account
+- `POST /api/finances/transfer` - Transfer money
+
+### Processes
+- `GET /api/processes` - Get user's processes
+- `POST /api/processes` - Start new process
+- `DELETE /api/processes/:id` - Cancel process
+
+### User
+- `GET /api/user/profile` - Get user profile
+- `PUT /api/user/profile` - Update profile
+- `GET /api/user/stats` - Get user statistics
+- `GET /api/user/ranking` - Get player rankings
+
+## Socket.IO Events
+
+### Client to Server
+- `process_update` - Update process status
+- `chat_message` - Send chat message
+- `notification` - Send notification
+- `process_completed` - Mark process as completed
+- `mission_update` - Update mission progress
+
+### Server to Client
+- `connected` - Connection established
+- `process_completed` - Process finished
+- `process_updated` - Process progress updated
+- `mission_updated` - Mission progress updated
+- `notification` - Receive notification
+- `private_message` - Private chat message
+- `global_message` - Global chat message
+
+## Development
+
+### Project Structure
+```
+hacker-experience-modern/
+├── server/                 # Backend code
+│   ├── config/            # Database and configuration
+│   ├── routes/            # API routes
+│   └── socket.js          # Socket.IO handler
+├── client/                # Frontend code
+│   ├── public/            # Static files
+│   ├── src/               # React source code
+│   │   ├── components/    # React components
+│   │   ├── contexts/      # React contexts
+│   │   └── styles/        # CSS files
+│   └── package.json       # Frontend dependencies
+├── package.json           # Backend dependencies
+└── README.md             # This file
+```
+
+### Available Scripts
+
+**Backend:**
+- `npm run server` - Start development server
+- `npm run build` - Build for production
+
+**Frontend:**
+- `npm run client` - Start React development server
+- `npm run build` - Build React app for production
+
+**Both:**
+- `npm run dev` - Start both servers concurrently
+
+## Deployment
+
+### Production Build
+```bash
+# Build the React app
+cd client
+npm run build
+cd ..
+
+# Set NODE_ENV to production
+export NODE_ENV=production
+
+# Start the server
+npm start
+```
+
+### Environment Variables for Production
+```env
+NODE_ENV=production
+DB_HOST=your_db_host
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=hacker_experience
+JWT_SECRET=your_secure_jwt_secret
+PORT=5000
+CLIENT_URL=https://your-domain.com
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-Legacy is published under the MIT license, as described in the `LICENSE` file. You can run your own private game server and display ads or charge money however you like, with no ties to me and/or Neoart Labs.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-The MIT license does not give you the right to use the brand Hacker Experience commercially, which is a registered trademark. In other words, please do not name your game server "Hacker Experience Continued" or anything like that. As always, [fair usage](https://support.google.com/legal/answer/4558992?hl=en), like mentioning it's based on Legacy, is OK.
+## Acknowledgments
 
-## Images
+- Original Hacker Experience Legacy by Renato Massaro
+- React and Node.js communities
+- All contributors and players
 
-I did not include with the source code most of the images and icons used in the game. You should get them yourself and make sure you understand the attribution requirements.
+## Support
 
-Most of the game icons were from the amazing [famfamfam](http://www.famfamfam.com/lab/icons/silk/) iconset. You can use it as long as you credit it.
+If you encounter any issues or have questions:
+1. Check the documentation
+2. Search existing issues
+3. Create a new issue with detailed information
 
-## Credits
+---
 
-The original Legacy had a credits section at the bottom of the page, which is included in the source code. Please make sure to update it accordingly.
-
-Please make sure to remove any comment or phrase that could be understood as an endorsement from myself or Neoart Labs.
-
-## Affiliation disclaimer
-
-All game servers that are based off of Legacy's codebase are in no way affiliated, endorsed or recommended by myself or Neoart Labs.
-
-## Data disclaimer
-
-I did not and I will not release the database contents from Legacy (including registered players' emails and usernames). In fact the last backup I had has been destroyed for good.
-
-## Limitation of liability
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**Welcome to the Matrix, hacker. Your journey begins now.**
